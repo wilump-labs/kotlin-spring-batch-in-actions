@@ -1,10 +1,21 @@
+spring.batch.job.name: ${jobName:NONE}
 spring:
   profiles:
     active: local
 
 ---
+spring.config.activate.on-profile: local
 spring:
-  profiles: local
+  batch:
+    jdbc:
+      initialize-schema: always
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
   datasource:
     hikari:
       jdbc-url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
@@ -12,11 +23,21 @@ spring:
       password:
       driver-class-name: org.h2.Driver
 ---
+spring.config.activate.on-profile: mysql
 spring:
-  profiles: mysql
+  batch:
+    jdbc:
+      initialize-schema: always
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
   datasource:
     hikari:
       jdbc-url: jdbc:mysql://localhost:13306/spring_batch
       username: root
-      password: 1q2w3e4r
+      password: 12345678
       driver-class-name: com.mysql.jdbc.Driver
